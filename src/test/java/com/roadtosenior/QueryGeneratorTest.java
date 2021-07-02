@@ -27,7 +27,6 @@ public class QueryGeneratorTest {
     @Test
     public void testGetById() {
         String getbyIdSql = queryGenerator.getById(Person.class, 1);
-        System.out.println(getbyIdSql);
         String expectedSql = "SELECT id, person_name, salary FROM persons WHERE id = 1;";
         assertEquals(expectedSql, getbyIdSql);
     }
