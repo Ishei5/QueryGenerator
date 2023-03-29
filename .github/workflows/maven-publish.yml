@@ -83,7 +83,7 @@ jobs:
         run: scp ./QueryGenerator-1.0-SNAPSHOT.jar ubuntu@3.77.20.61:${{ vars.DEST_DIR }}
         
       - name: Send some mail
-        uses: wadeww/send-email-action@master
+        uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           port: 465
@@ -92,4 +92,4 @@ jobs:
           subject: Workflow finished
           body: Job completed ${{job.status}}. Спасибо за внивание)
           to: pankov_isheev@rambler.ru, pankovisheev5@gmail.com
-          from: Me
+          from: pankovisheev5@gmail.com
