@@ -57,4 +57,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
       - name: Copy artifact to remote host
-        run: scp ./QueryGenerator-1.0-SNAPSHOT.jar ubuntu@3.77.20.61:/home/ubuntu
+        run: scp ./QueryGenerator-1.0-SNAPSHOT.jar ubuntu@3.77.20.61:${{ vars.DEST_DIR }}
