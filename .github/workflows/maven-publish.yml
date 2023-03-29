@@ -91,5 +91,5 @@ jobs:
           password: ${{secrets.MAIL_PASS}}
           subject: Workflow finished
           body: Job completed ${{job.status}}. Спасибо за внивание)
-          to: john@denver.com, elton@john.com
+          to: pankov_isheev@rambler.ru, pankovisheev5@gmail.com
           from: Me
