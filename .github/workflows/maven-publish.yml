@@ -81,3 +81,15 @@ jobs:
 
       - name: Copy artifact to remote host
         run: scp ./QueryGenerator-1.0-SNAPSHOT.jar ubuntu@3.77.20.61:${{ vars.DEST_DIR }}
+        
+      - name: Send some mail
+        uses: wadeww/send-email-action@master
+        with:
+          server_address: smtp.gmail.com
+          port: 465
+          username: pankovisheev5@gmail.com
+          password: ${{secrets.MAIL_PASS}}
+          subject: Workflow finished
+          body: Job completed ${{job.status}}. Спасибо за внивание)
+          to: john@denver.com, elton@john.com
+          from: Me
