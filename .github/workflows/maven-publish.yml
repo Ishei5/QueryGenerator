@@ -1,7 +1,4 @@
-# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
-
-name: Maven Package
+name: Maven build and pseudo Deployment
 
 on:
   workflow_dispatch:
@@ -36,71 +33,7 @@ jobs:
       fail-fast: true
       matrix:
         target: [Development, Production ]
-    uses: ./.github/workflows/deployment.yml
+    uses: ./.github/workflows/main.yml
     with:
       target-env: ${ { matrix.target } }
     secrets: inherit
-    
-  deploy_prod:
-    name: Deploy to prod environment
-    if: inputs.environment == 'Production'
-    runs-on: ubuntu-latest
-    needs: build_jar
-    environment:
-      name: "Production"
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: QueryGenerator-1.0-SNAPSHOT.jar
-
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          known_hosts: unnecessary
-            -
-      - name: Adding Known Hosts
-        run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
-
-      - name: Copy artifact to remote host
-        run: scp ./QueryGenerator-1.0-SNAPSHOT.jar ubuntu@3.77.20.61:${{ vars.DEST_DIR }}
-  
-  deploy_dev:
-    name: Deploy to dev environment
-    if: inputs.environment == 'Development'
-    runs-on: ubuntu-latest
-    needs: build_jar
-    environment:
-      name: "Development"
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: QueryGenerator-1.0-SNAPSHOT.jar
-
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          known_hosts: unnecessary
-            -
-      - name: Adding Known Hosts
-        run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
-
-      - name: Copy artifact to remote host
-        run: scp ./QueryGenerator-1.0-SNAPSHOT.jar ubuntu@3.77.20.61:${{ vars.DEST_DIR }}
-        
-      - name: Send some mail
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          port: 465
-          username: pankovisheev5@gmail.com
-          password: ${{secrets.MAIL_PASS}}
-          subject: Workflow finished
-          body: Job completed ${{job.status}}. Спасибо за внивание)
-          to: pankov_isheev@rambler.ru, pankovisheev5@gmail.com
-          from: pankovisheev5@gmail.com
