@@ -34,10 +34,8 @@ jobs:
         with:
           name: QueryGenerator-1.0-SNAPSHOT.jar
 
-      - name: Deploy to prod environment
-        if: inputs.target-env == 'Production'
-        id: deploy-to-webapp-dev
       - name: Install SSH Key
+        if: inputs.target-env == 'Production'
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
