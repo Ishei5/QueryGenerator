@@ -28,13 +28,12 @@ jobs:
           path: ${{ github.workspace }}/target/QueryGenerator-1.0-SNAPSHOT.jar
   
   ReuseableMatrixJobForDeployment:
-    name: Deploy
     needs: build_jar
     strategy:
       fail-fast: true
       matrix:
         target: [Development, Production ]
-    uses: ./.github/workflows/main.yml
+    uses: ./.github/workflows/deployment.yml
     with:
       target-env: ${{ matrix.target }}
     secrets: inherit
