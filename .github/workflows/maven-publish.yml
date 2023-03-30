@@ -30,6 +30,17 @@ jobs:
           name: QueryGenerator-1.0-SNAPSHOT.jar
           path: ${{ github.workspace }}/target/QueryGenerator-1.0-SNAPSHOT.jar
   
+  ReuseableMatrixJobForDeployment:
+    needs: build_jar
+    strategy:
+      fail-fast: true
+      matrix:
+        target: [Development, Production ]
+    uses: ./.github/workflows/deployment.yml
+    with:
+      target-env: ${ { matrix.target } }
+    secrets: inherit
+    
   deploy_prod:
     name: Deploy to prod environment
     if: inputs.environment == 'Production'
