@@ -34,7 +34,7 @@ jobs:
       fail-fast: true
       matrix:
         target: [Development, Production ]
-    uses: Ishei5/QueryGenerator .github/workflows/main.yml@main
+    uses: ./.github/workflows/main.yml
     with:
-      target-env: ${ { matrix.target } }
+      target-env: ${{ matrix.target }}
     secrets: inherit
