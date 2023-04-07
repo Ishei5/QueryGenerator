@@ -29,11 +29,7 @@ jobs:
   
   ReuseablerDeployment:
     needs: build_jar
-    strategy:
-      fail-fast: true
-      matrix:
-        target: [Development, Production ]
     uses: ./.github/workflows/main.yml
     with:
-      target-env: ${{ matrix.target }}
+      target-env: ${{ inputs.environment }}
     secrets: inherit
