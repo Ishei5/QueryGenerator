@@ -28,4 +28,4 @@ jobs:
       - run: echo "🎉 target evn inputs.target-env"
       - run: echo "🍏 is Dev  ${{ inputs.target-env }} == 'Development'"
       - run: echo "🐧 is Prod  ${{ inputs.target-env }} == 'Production'"
-      - run: echo "Destination - ${{ vars.DEST_DIR }} 
+      - run: echo "Destination - ${{ vars.DEST_DIR }}"
