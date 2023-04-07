@@ -27,7 +27,7 @@ jobs:
           name: QueryGenerator-1.0-SNAPSHOT.jar
           path: ${{ github.workspace }}/target/QueryGenerator-1.0-SNAPSHOT.jar
   
-  ReuseableMatrixJobForDeployment:
+  ReuseablerDeployment:
     needs: build_jar
     strategy:
       fail-fast: true
