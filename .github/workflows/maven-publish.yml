@@ -26,4 +26,4 @@ jobs:
         uses: ./.github/workflows/rf.yml
         with:
           target-env: ${{ inputs.environment }}
-          secrets: inherit
+        #secrets: inherit
