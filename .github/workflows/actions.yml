@@ -1,0 +1,36 @@
+name: Reusable deployment workflow
+
+inputs:
+  target-env:
+    required: true
+    type: string
+secrets:
+  SSH_KEY:
+    required: true
+  SSH_HOST:
+    required: true
+  SSH_PORT:
+    required: true
+
+runs:
+  using: "composite"
+  environment:
+    name: ${{ inputs.target-env }}
+
+  steps:
+    - run: echo "🎉 target evn ${{ inputs.target-env}}"
+    - run: echo "🎉 target evn inputs.target-env"
+    - run: echo "🍏 is Dev  ${{ inputs.target-env }} == 'Development'"
+    - run: echo "🐧 is Prod  ${{ inputs.target-env }} == 'Production'"
+    - run: echo "Destination - ${{ vars.DEST_DIR }}"
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_KEY }}
+        known_hosts: unnecessary
+
+    - name: Adding Known Hosts
+      run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+
+      - name: Copy backend artifact to remote host
+        run: scp ./goods-partner-backend-1.0-SNAPSHOT.jar  ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ vars.DEST_DIR }}
