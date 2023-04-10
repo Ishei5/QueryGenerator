@@ -10,7 +10,7 @@ on:
 
 jobs:
   build_jar:
-    name: Build jar
+    name: Build jar and Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,15 +21,9 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn clean install
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+
+      - name: Deploy
+        uses: ./.github/workflows/rf.yml
         with:
-          name: QueryGenerator-1.0-SNAPSHOT.jar
-          path: ${{ github.workspace }}/target/QueryGenerator-1.0-SNAPSHOT.jar
-  
-  ReuseablerDeployment:
-    needs: build_jar
-    uses: ./.github/workflows/main.yml
-    with:
-      target-env: ${{ inputs.environment }}
-    secrets: inherit
+          target-env: ${{ inputs.environment }}
+          secrets: inherit
