@@ -23,6 +23,9 @@ jobs:
         run: mvn clean install
       - uses: actions/checkout@v3
       - name: Try to deploy
-        uses: ./.github/workflows/rm.yml
+        uses: ./.github/actions/action_deploy.yml
         with:
-          target-env: ${{ inputs.environment }} 
+          target-env: ${{ inputs.environment }}
+          ssh_key: ${{ secrets.SSH_KEY }}
+          ssh_host: ${{ secrets.SSH_HOST }}
+          ssh_port: ${{ secrets.SSH_PORT }}
