@@ -1,0 +1,38 @@
+name: 'Deploy action'
+description: 'Deploy action'
+inputs:
+  target-env:
+    required: true
+    type: string
+  ssh_key:
+    required: true
+    type: string
+  ssh_host:
+    required: true
+    type: string
+  ssh_port:
+    required: true
+    type: string
+#outputs:
+#  random-number:
+#    description: "Random number"
+#    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo "🎉 target evn ${{ inputs.target-env}}"
+    - run: echo "🎉 target evn inputs.target-env"
+    - run: echo "🍏 is Dev  ${{ inputs.target-env }} == 'Development'"
+    - run: echo "🐧 is Prod  ${{ inputs.target-env }} == 'Production'"
+    - run: echo "Destination - ${{ vars.DEST_DIR }}"
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ inputs.ssh_key }}
+        known_hosts: unnecessary
+
+    - name: Adding Known Hosts
+      run: ssh-keyscan -p ${{ inputs.ssh_port}} -H ${{ inputs.ssh_host }}  >> ~/.ssh/known_hosts
+
+    - name: Copy backend artifact to remote host
+      run: scp ./goods-partner-backend-1.0-SNAPSHOT.jar  ${{ inputs.ssh_user }}@${{ inputs.ssh_host }}:/home/ubuntu    
