@@ -3,7 +3,6 @@ description: 'Deploy action'
 inputs:
   target-env:
     required: true
-    type: string
   ssh_key:
     required: true
   ssh_host:
