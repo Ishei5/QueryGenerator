@@ -35,5 +35,5 @@ runs:
       shell: bash
 
     - name: Copy backend artifact to remote host
-      run: scp ./QueryGenerator-SNAPSHOT.jar  ${{ inputs.ssh_user }}@${{ inputs.ssh_host }}:/home/ubuntu
+      run: scp /home/runner/work/QueryGenerator/QueryGenerator/target/QueryGenerator-1.0-SNAPSHOT.jar  ${{ inputs.ssh_user }}@${{ inputs.ssh_host }}:/home/ubuntu
       shell: bash
