@@ -23,6 +23,6 @@ jobs:
         run: mvn clean install
       - uses: actions/checkout@v3
       - name: Try to deploy
-        uses: ./rm.yml
+        uses: ./.github/workflows/rm.yml
         with:
           target-env: ${{ inputs.environment }} 
