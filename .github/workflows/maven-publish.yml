@@ -22,7 +22,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
       - name: Try to deploy
-        uses: actions/QueryGenerator@t198e090
+        uses: ./rm.yml
         with:
-          target-env: ${{ inputs.environment }}
- 
+          target-env: ${{ inputs.environment }} 
