@@ -17,9 +17,13 @@ runs:
   using: "composite"
   steps:
     - run: echo "🎉 target evn ${{ inputs.target-env}}"
+      shell: bash
     - run: echo "🎉 target evn inputs.target-env"
+      shell: bash
     - run: echo "🍏 is Dev  ${{ inputs.target-env }} == 'Development'"
+      shell: bash
     - run: echo "🐧 is Prod  ${{ inputs.target-env }} == 'Production'"
+      shell: bash
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2
       with:
