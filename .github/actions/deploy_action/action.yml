@@ -32,6 +32,8 @@ runs:
 
     - name: Adding Known Hosts
       run: ssh-keyscan -p ${{ inputs.ssh_port}} -H ${{ inputs.ssh_host }}  >> ~/.ssh/known_hosts
+      shell: bash
 
     - name: Copy backend artifact to remote host
-      run: scp ./QueryGenerator-SNAPSHOT.jar  ${{ inputs.ssh_user }}@${{ inputs.ssh_host }}:/home/ubuntu    
+      run: scp ./QueryGenerator-SNAPSHOT.jar  ${{ inputs.ssh_user }}@${{ inputs.ssh_host }}:/home/ubuntu
+      shell: bash
