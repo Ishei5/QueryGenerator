@@ -23,7 +23,7 @@ jobs:
         run: mvn clean install
       - uses: actions/checkout@v3
       - name: Try to deploy
-        uses: ./.github/actions/deploy_action
+        uses: .github/actions/deploy_action
         with:
           target-env: ${{ inputs.environment }}
           ssh_key: ${{ secrets.SSH_KEY }}
