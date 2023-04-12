@@ -34,4 +34,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
       - name: Copy backend artifact to remote host
-        run: scp ${{ github.workspace }}/QueryGenerator-1.0-SNAPSHOT.jar  ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ vars.DEST_DIR }}
+        run: scp ${{ github.workspace }}/target/QueryGenerator-1.0-SNAPSHOT.jar  ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ vars.DEST_DIR }}
