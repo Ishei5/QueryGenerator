@@ -12,6 +12,8 @@ jobs:
   build_jar:
     name: Build jar
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -21,11 +23,15 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn clean install
-      - uses: actions/checkout@v3
-      - name: Try to deploy
-        uses: ./.github/actions/deploy_action
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
         with:
-          target-env: ${{ inputs.environment }}
-          ssh_key: ${{ secrets.SSH_KEY }}
-          ssh_host: ${{ secrets.SSH_HOST }}
-          ssh_port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: unnecessary
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+
+      - name: Copy backend artifact to remote host
+        run: scp ./goods-partner-backend-1.0-SNAPSHOT.jar  ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:{{ vars.DEST_DIR }}
