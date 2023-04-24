@@ -17,8 +17,6 @@ on:
 jobs:
   deploy:
     name: Deploy to ${{ inputs.target-env }}
-    permissions:
-      contents: none
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.target-env }}
