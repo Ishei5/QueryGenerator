@@ -8,6 +8,10 @@ on:
         type: environment
         required: true
 
+permissions:
+  workflow_dispatch: 
+    users:
+
 jobs:
   build_jar:
     name: Build jar
