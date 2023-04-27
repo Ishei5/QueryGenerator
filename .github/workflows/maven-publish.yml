@@ -11,7 +11,7 @@ on:
 jobs:
   build_jar:
     name: Build jar
-    if: contains('["kingthorin","lpoulter"]', github.actor)
+    #if: contains('["kingthorin","lpoulter"]', github.actor)
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
