@@ -22,6 +22,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
       - name: Build with Maven
         run: mvn clean install
 
@@ -34,5 +41,5 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
-      - name: Copy backend artifact to remote host
-        run: scp ${{ github.workspace }}/target/QueryGenerator-1.0-SNAPSHOT.jar  ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ vars.DEST_DIR }}
+      #- name: Copy backend artifact to remote host
+      #  run: scp ${{ github.workspace }}/target/QueryGenerator-1.0-SNAPSHOT.jar  ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ vars.DEST_DIR }}
